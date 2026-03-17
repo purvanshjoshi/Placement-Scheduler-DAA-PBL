@@ -1,0 +1,35 @@
+[
+  {
+    "id": "176934267141",
+    "name": "parth nailwal",
+    "rollNumber": "2418721",
+    "section": "b1",
+    "cgpa": "8.9",
+    "contact": "",
+    "password": "12345",
+    "appliedCompanies": "176934124941,176934257241",
+    "completedWorksheets": "176934133341"
+  },
+  {
+    "id": "176934822541",
+    "name": "kumar aditya",
+    "rollNumber": "2418722",
+    "section": "A1",
+    "cgpa": "9.0",
+    "contact": "9810190953",
+    "password": "12345",
+    "appliedCompanies": "176934124941,176934345841",
+    "completedWorksheets": "176934133341"
+  },
+  {
+    "id": "177217896541",
+    "name": "aman nailwal",
+    "rollNumber": "2418720",
+    "section": "A2",
+    "cgpa": "7.2",
+    "contact": "986554495",
+    "password": "12345",
+    "appliedCompanies": "176934124941",
+    "completedWorksheets": ""
+  }
+]

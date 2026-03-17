@@ -1,0 +1,22 @@
+[
+  {
+    "id": "176934262341",
+    "teacherName": "akaash",
+    "date": "2016-02-01",
+    "time": "09:30-10:30",
+    "venue": "open audi",
+    "bookedStudents": "176934267141,176934822541",
+    "availableSlots": 1,
+    "totalSlots": 3
+  },
+  {
+    "id": "176934435141",
+    "teacherName": "jyoti",
+    "date": "2026-02-05",
+    "time": "10:00-11:30",
+    "venue": "cr202",
+    "bookedStudents": "176934822541",
+    "availableSlots": 2,
+    "totalSlots": 3
+  }
+]

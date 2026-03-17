@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Scheduler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-page active">
+        <div class="login-container">
+            <div class="login-header">
+                <i class="fas fa-briefcase"></i>
+                <h1>Placement Scheduler</h1>
+                <p>Your one-stop solution for placement preparation</p>
+            </div>
+            
+            <div class="login-options">
+                <div class="login-card" onclick="showLoginForm('admin')">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Admin Login</h3>
+                    <p>Manage companies, worksheets, and interviews</p>
+                </div>
+                
+                <div class="login-card" onclick="showLoginForm('student')">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Student Login</h3>
+                    <p>Apply to companies and practice for placements</p>
+                </div>
+                
+                <div class="login-card" onclick="showSignupForm()">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>Student Signup</h3>
+                    <p>Create new student account</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Form -->
+    <div id="adminLoginForm" class="auth-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+                <button class="close-btn" onclick="hideAllForms()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" placeholder="Enter admin username">
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin password">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="adminLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Login as Admin
+                </button>
+                <button class="btn btn-outline btn-block" onclick="hideAllForms()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Login Form -->
+    <div id="studentLoginForm" class="auth-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-graduate"></i> Student Login</h2>
+                <button class="close-btn" onclick="hideAllForms()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="studentRoll">Roll Number</label>
+                    <input type="text" id="studentRoll" placeholder="Enter your roll number">
+                </div>
+                <div class="form-group">
+                    <label for="studentPassword">Password</label>
+                    <input type="password" id="studentPassword" placeholder="Enter your password">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="studentLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Login as Student
+                </button>
+                <button class="btn btn-outline btn-block" onclick="hideAllForms()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Signup Form -->
+    <div id="studentSignupForm" class="auth-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Student Signup</h2>
+                <button class="close-btn" onclick="hideAllForms()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="signupRoll">Roll Number</label>
+                    <input type="text" id="signupRoll" placeholder="Enter your roll number">
+                </div>
+                <div class="form-group">
+                    <label for="signupSection">Section</label>
+                    <input type="text" id="signupSection" placeholder="Enter your section">
+                </div>
+                <div class="form-group">
+                    <label for="signupContact">Contact Number</label>
+                    <input type="tel" id="signupContact" placeholder="Enter contact number">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Enter password (default: 12345)" value="12345">
+                </div>
+                <button class="btn btn-success btn-block" onclick="studentSignup()">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                <button class="btn btn-outline btn-block" onclick="hideAllForms()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden by default) -->
+    <div id="appContainer" class="app-container">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Placement Scheduler</span>
+                </div>
+                <div class="nav-links" id="navLinks">
+                    <a href="#" onclick="showSection('dashboard')" class="active">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                    
+                    <!-- Admin Links -->
+                    <a href="#" onclick="showSection('manageCompanies')" id="adminCompanyLink" style="display: none;">
+                        <i class="fas fa-building"></i> Manage Companies
+                    </a>
+                    <a href="#" onclick="showSection('uploadWorksheet')" id="adminWorksheetLink" style="display: none;">
+                        <i class="fas fa-file-alt"></i> Upload Worksheet
+                    </a>
+                    <a href="#" onclick="showSection('viewStudents')" id="adminStudentLink" style="display: none;">
+                        <i class="fas fa-users"></i> View Students
+                    </a>
+                    <a href="#" onclick="showSection('manageInterviews')" id="adminInterviewLink" style="display: none;">
+                        <i class="fas fa-calendar-alt"></i> Manage Interviews
+                    </a>
+                    
+                    <!-- Student Links -->
+                    <a href="#" onclick="showSection('upcomingCompanies')" id="studentCompanyLink" style="display: none;">
+                        <i class="fas fa-building"></i> Upcoming Companies
+                    </a>
+                    <a href="#" onclick="showSection('practiceWorksheets')" id="studentWorksheetLink" style="display: none;">
+                        <i class="fas fa-file-alt"></i> Practice Worksheets
+                    </a>
+                    <a href="#" onclick="showSection('bookInterview')" id="studentInterviewLink" style="display: none;">
+                        <i class="fas fa-calendar-check"></i> Book Interview
+                    </a>
+                    <a href="#" onclick="showSection('myApplications')" id="studentApplicationLink" style="display: none;">
+                        <i class="fas fa-file-signature"></i> My Applications
+                    </a>
+                    <a href="#" onclick="showSection('myProfile')" id="studentProfileLink" style="display: none;">
+                        <i class="fas fa-user"></i> My Profile
+                    </a>
+                    
+                    <div class="user-section">
+                        <span id="userGreeting">Welcome!</span>
+                        <button class="btn btn-sm btn-danger" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+                <button class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container">
+            <!-- Dashboard -->
+            <section id="dashboard" class="section active">
+                <div class="dashboard-header">
+                    <h1 id="dashboardTitle">Dashboard</h1>
+                    <p id="dashboardSubtitle">Welcome to Placement Scheduler</p>
+                </div>
+                
+                <div class="dashboard-cards" id="dashboardCards">
+                    <!-- Cards will be loaded based on user type -->
+                </div>
+                
+            </section>
+
+            <!-- Admin: Manage Companies -->
+            <section id="manageCompanies" class="section">
+                <div class="section-header">
+                    <h2>Manage Companies</h2>
+                    <button class="btn btn-primary" onclick="showAddCompanyModal()">
+                        <i class="fas fa-plus"></i> Add Company
+                    </button>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="companySearch" placeholder="Search companies..." onkeyup="searchCompanies()">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Stipend (₹)</th>
+                                <th>Deadline</th>
+                                <th>Applications</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="companiesTable">
+                            <!-- Companies will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Admin: Upload Worksheet -->
+            <section id="uploadWorksheet" class="section">
+                <div class="section-header">
+                    <h2>Upload Worksheet</h2>
+                </div>
+                
+                <div class="upload-form">
+                    <div class="form-group">
+                        <label for="worksheetTitle">Title</label>
+                        <input type="text" id="worksheetTitle" placeholder="Enter worksheet title">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="worksheetCompany">Company</label>
+                        <select id="worksheetCompany">
+                            <option value="">Select Company</option>
+                            <!-- Companies will be loaded here -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="worksheetDescription">Description</label>
+                        <textarea id="worksheetDescription" rows="3" placeholder="Enter worksheet description"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="worksheetFile">Upload File</label>
+                        <div class="file-upload-container">
+                            <input type="file" id="worksheetFile" accept=".pdf,.doc,.docx,.txt,.xlsx,.xls,.ppt,.pptx">
+                            <div class="file-upload-info">
+                                <span id="selectedFileName">No file selected</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-success" onclick="uploadWorksheet()">
+                        <i class="fas fa-upload"></i> Upload Worksheet
+                    </button>
+                </div>
+                
+                <div class="worksheets-list">
+                    <h3>Existing Worksheets</h3>
+                    <div class="grid-container" id="worksheetsList">
+                        <!-- Worksheets will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin: View Students -->
+            <section id="viewStudents" class="section">
+                <div class="section-header">
+                    <h2>View Students</h2>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="studentSearch" placeholder="Search by roll number..." onkeyup="searchStudents()">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Roll Number</th>
+                                <th>Section</th>
+                                <th>CGPA</th>
+                                <th>Applications</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTable">
+                            <!-- Students will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Admin: Manage Interviews -->
+            <section id="manageInterviews" class="section">
+                <div class="section-header">
+                    <h2>Manage Mock Interviews</h2>
+                    <button class="btn btn-primary" onclick="showScheduleInterviewModal()">
+                        <i class="fas fa-calendar-plus"></i> Schedule Interview
+                    </button>
+                </div>
+                
+                <div class="grid-container" id="interviewsGrid">
+                    <!-- Interviews will be loaded here -->
+                </div>
+                
+                <div class="booked-students">
+                    <h3>Booked Students</h3>
+                    <div id="bookedStudentsList">
+                        <!-- Booked students will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student: Upcoming Companies -->
+            <section id="upcomingCompanies" class="section">
+                <div class="section-header">
+                    <h2>Upcoming Companies</h2>
+                </div>
+                
+                <div class="grid-container" id="companiesGrid">
+                    <!-- Companies will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Student: Practice Worksheets -->
+            <section id="practiceWorksheets" class="section">
+                <div class="section-header">
+                    <h2>Practice Worksheets</h2>
+                    <div class="progress-display">
+                        <span id="completionRate">0% Complete</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="worksheets-filter">
+                    <select id="worksheetFilter" onchange="filterWorksheets()">
+                        <option value="all">All Companies</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                
+                <div class="grid-container" id="studentWorksheetsGrid">
+                    <!-- Worksheets will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Student: Book Interview -->
+            <section id="bookInterview" class="section">
+                <div class="section-header">
+                    <h2>Book Mock Interview</h2>
+                </div>
+                
+                <div class="interviews-container">
+                    <div class="available-slots">
+                        <h3>Available Slots</h3>
+                        <div class="grid-container" id="availableInterviews">
+                            <!-- Available interviews will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="my-bookings">
+                        <h3>My Bookings</h3>
+                        <div id="myBookingsList">
+                            <!-- Student's bookings will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student: My Applications -->
+            <section id="myApplications" class="section">
+                <div class="section-header">
+                    <h2>My Applications</h2>
+                </div>
+                
+                <div class="applications-list" id="applicationsList">
+                    <!-- Applications will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Student: My Profile -->
+            <section id="myProfile" class="section">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">Student Name</h2>
+                            <p id="profileRoll">Roll Number: -</p>
+                            <p id="profileSection">Section: -</p>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-building"></i>
+                            <h3 id="appliedCompanies">0</h3>
+                            <p>Companies Applied</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-file-check"></i>
+                            <h3 id="completedWorksheets">0</h3>
+                            <p>Worksheets Completed</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-calendar-check"></i>
+                            <h3 id="bookedInterviews">0</h3>
+                            <p>Interviews Booked</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3 id="profileCgpa">0.0</h3>
+                            <p>CGPA</p>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-details">
+                        <h3>Personal Information</h3>
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Contact Number:</span>
+                                <span class="detail-value" id="profileContact">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Account Type:</span>
+                                <span class="detail-value" id="profileRole">Student</span>
+                            </div>
+                            <!-- CGPA Edit Section -->
+                            <div class="detail-item">
+                                <span class="detail-label">CGPA:</span>
+                                <span class="detail-value" id="profileCgpaDisplay">-</span>
+                                <button class="btn btn-sm btn-outline" onclick="enableCgpaEdit()">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                            </div>
+                            <!-- CGPA Edit Form (initially hidden) -->
+                            <div class="detail-item" id="cgpaEditForm" style="display: none; flex-direction: column; align-items: flex-start; gap: 10px;">
+                                <span class="detail-label">Update CGPA:</span>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="number" id="cgpaInput" min="0" max="10" step="0.01" 
+                                           placeholder="Enter CGPA" style="width: 100px; padding: 8px;">
+                                    <button class="btn btn-sm btn-success" onclick="updateCgpa()">
+                                        <i class="fas fa-check"></i> Save
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="cancelCgpaEdit()">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Placement Scheduler. All rights reserved.</p>
+                <p>Developed for DAA-PBL Project</p> <!-- Removed "Admin: Ayshi Jain" -->
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Company Modal -->
+    <div id="addCompanyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Company</h3>
+                <button class="close-btn" onclick="hideAddCompanyModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modalCompanyName">Company Name</label>
+                    <input type="text" id="modalCompanyName" placeholder="Enter company name">
+                </div>
+                <div class="form-group">
+                    <label for="modalCompanyStipend">Stipend (₹)</label>
+                    <input type="number" id="modalCompanyStipend" placeholder="Enter stipend amount">
+                </div>
+                <div class="form-group">
+                    <label for="modalCompanyPrerequisites">Prerequisites</label>
+                    <textarea id="modalCompanyPrerequisites" rows="3" placeholder="Enter prerequisites"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="modalCompanyDeadline">Deadline</label>
+                    <input type="date" id="modalCompanyDeadline">
+                </div>
+                <button class="btn btn-success" onclick="addCompany()">
+                    <i class="fas fa-save"></i> Save Company
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Interview Modal -->
+    <div id="scheduleInterviewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Schedule Mock Interview</h3>
+                <button class="close-btn" onclick="hideScheduleInterviewModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modalTeacherName">Teacher Name</label>
+                    <input type="text" id="modalTeacherName" placeholder="Enter teacher name">
+                </div>
+                <div class="form-group">
+                    <label for="modalInterviewDate">Date</label>
+                    <input type="date" id="modalInterviewDate">
+                </div>
+                <div class="form-group">
+                    <label for="modalInterviewStartTime">Start Time</label>
+                    <input type="time" id="modalInterviewStartTime">
+                </div>
+                <div class="form-group">
+                    <label for="modalInterviewEndTime">End Time</label>
+                    <input type="time" id="modalInterviewEndTime">
+                </div>
+                <div class="form-group">
+                    <label for="modalInterviewVenue">Venue</label>
+                    <input type="text" id="modalInterviewVenue" placeholder="Enter venue">
+                </div>
+                <button class="btn btn-success" onclick="scheduleInterview()">
+                    <i class="fas fa-calendar-check"></i> Schedule Interview
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apply Company Modal -->
+    <div id="applyCompanyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="applyCompanyTitle">Apply to Company</h3>
+                <button class="close-btn" onclick="hideApplyCompanyModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="company-info" id="applyCompanyInfo">
+                    <!-- Company info will be loaded here -->
+                </div>
+                
+                <div class="application-form">
+                    <div class="form-group">
+                        <label for="applicationAnswer1">Why do you want to work at this company?</label>
+                        <textarea id="applicationAnswer1" rows="3" placeholder="Enter your answer"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicationAnswer2">What relevant skills do you have?</label>
+                        <textarea id="applicationAnswer2" rows="3" placeholder="Enter your answer"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicationAnswer3">What is your expected stipend?</label>
+                        <input type="text" id="applicationAnswer3" placeholder="Enter expected stipend">
+                    </div>
+                    <button class="btn btn-primary" onclick="submitApplication()">
+                        <i class="fas fa-paper-plane"></i> Submit Application
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Applications Modal -->
+    <div id="viewApplicationsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="viewApplicationsTitle">Company Applications</h3>
+                <button class="close-btn" onclick="hideViewApplicationsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="applications-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Roll Number</th>
+                                <th>Applied Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTableBody">
+                            <!-- Applications will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Operation completed successfully!</span>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
