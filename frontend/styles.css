@@ -6,16 +6,30 @@
 }
 
 :root {
-    --primary-color: #2563eb;
+    /* [CORE SPECIFICATION] - CSS Architecture */
+    --glass-bg: #ffffff;
+    --glass-border: #e5e7eb;
+    --text-main: #1f2937;
+    --accent-color: #2563eb;
+    
+    /* Dynamic Page Background */
+    --page-bg-start: #f5f7fa;
+    --page-bg-end: #c3cfe2;
+    --hover-bg: #f8fafc;
+    
+    /* Original Base Variables Mapped to New Architecture */
+    --primary-color: var(--accent-color);
     --secondary-color: #7c3aed;
     --success-color: #10b981;
     --danger-color: #ef4444;
     --warning-color: #f59e0b;
     --info-color: #3b82f6;
-    --dark-color: #1f2937;
+    --dark-color: var(--text-main);
     --light-color: #f9fafb;
     --gray-color: #6b7280;
-    --border-color: #e5e7eb;
+    --border-color: var(--glass-border);
+    
+    /* Shadows & Radii */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -23,12 +37,34 @@
     --radius-lg: 12px;
 }
 
+/* [CORE SPECIFICATION] - Dark Class */
+.dark-mode {
+    --glass-bg: rgba(20, 20, 20, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-main: #ffffff;
+    --accent-color: #4da3ff;
+    
+    /* Dark Mode Overrides for Base Variables */
+    --page-bg-start: #0f172a;
+    --page-bg-end: #1e293b;
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    
+    --primary-color: var(--accent-color);
+    --light-color: rgba(30, 30, 30, 0.6);
+    --gray-color: #9ca3af;
+    --border-color: var(--glass-border);
+    
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: var(--dark-color);
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--text-main);
+    background: linear-gradient(135deg, var(--page-bg-start) 0%, var(--page-bg-end) 100%);
     min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Login Page */
@@ -45,13 +81,16 @@ body {
 }
 
 .login-container {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     padding: 40px;
     width: 100%;
     max-width: 800px;
     text-align: center;
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 .login-header {
@@ -66,7 +105,7 @@ body {
 
 .login-header h1 {
     font-size: 2.5rem;
-    color: var(--dark-color);
+    color: var(--text-main);
     margin-bottom: 10px;
 }
 
@@ -106,7 +145,7 @@ body {
 .login-card h3 {
     font-size: 1.3rem;
     margin-bottom: 10px;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .login-card p {
@@ -130,11 +169,14 @@ body {
 }
 
 .auth-modal .modal-content {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     width: 100%;
     max-width: 500px;
     animation: slideIn 0.3s ease;
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 @keyframes slideIn {
@@ -160,7 +202,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .auth-modal .modal-body {
@@ -176,11 +218,14 @@ body {
 
 /* Navigation Bar */
 .navbar {
-    background: white;
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     box-shadow: var(--shadow);
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 .nav-container {
@@ -214,7 +259,7 @@ body {
 
 .nav-links a {
     text-decoration: none;
-    color: var(--dark-color);
+    color: var(--text-main);
     font-weight: 500;
     padding: 8px 16px;
     border-radius: var(--radius);
@@ -247,7 +292,7 @@ body {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 /* Main Content */
@@ -290,7 +335,7 @@ body {
 
 .section-header h2 {
     font-size: 2rem;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 /* Dashboard */
@@ -301,7 +346,7 @@ body {
 
 .dashboard-header h1 {
     font-size: 2.5rem;
-    color: var(--dark-color);
+    color: var(--text-main);
     margin-bottom: 10px;
 }
 
@@ -318,7 +363,9 @@ body {
 }
 
 .dashboard-card {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     padding: 30px;
     text-align: center;
@@ -340,7 +387,7 @@ body {
 
 .dashboard-card h3 {
     font-size: 2.5rem;
-    color: var(--dark-color);
+    color: var(--text-main);
     margin-bottom: 10px;
 }
 
@@ -350,15 +397,18 @@ body {
 }
 
 .recent-activity {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     padding: 30px;
     box-shadow: var(--shadow);
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 .recent-activity h2 {
     margin-bottom: 20px;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .activity-list {
@@ -406,9 +456,11 @@ body {
     width: 100%;
     padding: 12px 40px 12px 15px;
     border: 2px solid var(--border-color);
+    background: var(--glass-bg);
+    color: var(--text-main);
     border-radius: var(--radius);
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, background 0.3s ease;
 }
 
 .search-box input:focus {
@@ -426,12 +478,15 @@ body {
 
 /* Tables */
 .table-container {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow);
     margin-top: 20px;
     overflow-x: auto;
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 table {
@@ -448,7 +503,7 @@ th {
     padding: 15px;
     text-align: left;
     font-weight: 600;
-    color: var(--dark-color);
+    color: var(--text-main);
     border-bottom: 2px solid var(--border-color);
 }
 
@@ -458,7 +513,7 @@ td {
 }
 
 tr:hover {
-    background: #f8fafc;
+    background: var(--hover-bg);
 }
 
 /* Cards */
@@ -470,11 +525,13 @@ tr:hover {
 }
 
 .card {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     padding: 25px;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background 0.3s ease, border 0.3s ease;
 }
 
 .card:hover {
@@ -491,7 +548,7 @@ tr:hover {
 .card-title {
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .card-body {
@@ -518,23 +575,23 @@ tr:hover {
 }
 
 .badge-success {
-    background: #d1fae5;
-    color: #065f46;
+    background: var(--success-color);
+    color: #ffffff;
 }
 
 .badge-warning {
-    background: #fef3c7;
-    color: #92400e;
+    background: var(--warning-color);
+    color: #ffffff;
 }
 
 .badge-danger {
-    background: #fee2e2;
-    color: #991b1b;
+    background: var(--danger-color);
+    color: #ffffff;
 }
 
 .badge-info {
-    background: #dbeafe;
-    color: #1e40af;
+    background: var(--info-color);
+    color: #ffffff;
 }
 
 /* Buttons */
@@ -558,7 +615,7 @@ tr:hover {
 }
 
 .btn-primary:hover {
-    background: #1d4ed8;
+    filter: brightness(0.9);
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -569,7 +626,7 @@ tr:hover {
 }
 
 .btn-success:hover {
-    background: #059669;
+    filter: brightness(0.9);
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -580,7 +637,7 @@ tr:hover {
 }
 
 .btn-danger:hover {
-    background: #dc2626;
+    filter: brightness(0.9);
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -591,7 +648,7 @@ tr:hover {
 }
 
 .btn-warning:hover {
-    background: #d97706;
+    filter: brightness(0.9);
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -625,7 +682,7 @@ tr:hover {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .form-group input,
@@ -634,9 +691,11 @@ tr:hover {
     width: 100%;
     padding: 12px 15px;
     border: 2px solid var(--border-color);
+    background: var(--glass-bg);
+    color: var(--text-main);
     border-radius: var(--radius);
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, background 0.3s ease;
 }
 
 .form-group input:focus,
@@ -658,13 +717,14 @@ tr:hover {
     border: 2px dashed var(--border-color);
     border-radius: var(--radius);
     background: var(--light-color);
+    color: var(--text-main);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .file-upload-container input[type="file"]:hover {
     border-color: var(--primary-color);
-    background: #f0f7ff;
+    background: var(--hover-bg);
 }
 
 .file-upload-container input[type="file"]::file-selector-button {
@@ -675,11 +735,11 @@ tr:hover {
     color: white;
     cursor: pointer;
     margin-right: 15px;
-    transition: background 0.3s ease;
+    transition: filter 0.3s ease;
 }
 
 .file-upload-container input[type="file"]::file-selector-button:hover {
-    background: #1d4ed8;
+    filter: brightness(0.9);
 }
 
 .file-upload-info {
@@ -689,15 +749,18 @@ tr:hover {
 
 .file-upload-info span {
     font-weight: 500;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .upload-form {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     padding: 30px;
     box-shadow: var(--shadow);
     margin-bottom: 30px;
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 .worksheets-filter {
@@ -708,6 +771,8 @@ tr:hover {
     width: 200px;
     padding: 10px;
     border: 2px solid var(--border-color);
+    background: var(--glass-bg);
+    color: var(--text-main);
     border-radius: var(--radius);
     font-size: 1rem;
 }
@@ -742,16 +807,19 @@ tr:hover {
 
 .available-slots,
 .my-bookings {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     padding: 25px;
     box-shadow: var(--shadow);
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 .my-bookings h3,
 .available-slots h3 {
     margin-bottom: 20px;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .booking-item {
@@ -766,10 +834,13 @@ tr:hover {
 
 /* Profile */
 .profile-container {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     padding: 30px;
     box-shadow: var(--shadow);
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 .profile-header {
@@ -798,7 +869,7 @@ tr:hover {
 
 .profile-info h2 {
     font-size: 2rem;
-    color: var(--dark-color);
+    color: var(--text-main);
     margin-bottom: 10px;
 }
 
@@ -829,7 +900,7 @@ tr:hover {
 
 .stat-card h3 {
     font-size: 2.5rem;
-    color: var(--dark-color);
+    color: var(--text-main);
     margin-bottom: 10px;
 }
 
@@ -839,7 +910,7 @@ tr:hover {
 
 .profile-details h3 {
     margin-bottom: 20px;
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .details-grid {
@@ -862,7 +933,7 @@ tr:hover {
 }
 
 .detail-value {
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 /* Student Details Modal Styles */
@@ -884,7 +955,7 @@ tr:hover {
 
 .student-details .detail-label {
     font-weight: 600;
-    color: var(--dark-color);
+    color: var(--text-main);
     font-size: 0.9rem;
 }
 
@@ -918,8 +989,8 @@ button[title]:hover::after {
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--dark-color);
-    color: white;
+    background: var(--text-main);
+    color: var(--glass-bg);
     padding: 5px 10px;
     border-radius: var(--radius);
     font-size: 0.8rem;
@@ -966,12 +1037,15 @@ button[title]:hover::after {
 }
 
 .modal-content {
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     width: 100%;
     max-width: 600px;
     max-height: 90vh;
     overflow-y: auto;
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
 .modal-header {
@@ -982,12 +1056,13 @@ button[title]:hover::after {
     align-items: center;
     position: sticky;
     top: 0;
-    background: white;
+    background: var(--glass-bg);
     z-index: 1;
+    transition: background 0.3s ease;
 }
 
 .modal-header h3 {
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .close-btn {
@@ -1005,7 +1080,7 @@ button[title]:hover::after {
 }
 
 .close-btn:hover {
-    color: var(--dark-color);
+    color: var(--text-main);
 }
 
 .modal-body {
@@ -1019,7 +1094,7 @@ button[title]:hover::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--glass-bg);
     display: none;
     align-items: center;
     justify-content: center;
@@ -1037,7 +1112,7 @@ button[title]:hover::after {
 }
 
 .loading-spinner p {
-    color: var(--dark-color);
+    color: var(--text-main);
     font-size: 1.1rem;
 }
 
@@ -1046,7 +1121,8 @@ button[title]:hover::after {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 15px 20px;
     box-shadow: var(--shadow-lg);
@@ -1057,6 +1133,7 @@ button[title]:hover::after {
     transform: translateY(100px);
     opacity: 0;
     transition: all 0.3s ease;
+    color: var(--text-main);
 }
 
 .toast.show {
@@ -1096,8 +1173,8 @@ button[title]:hover::after {
 }
 
 .alert-info {
-    background: #dbeafe;
-    color: #1e40af;
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--info-color);
     border-left: 4px solid var(--primary-color);
 }
 
@@ -1113,7 +1190,7 @@ button[title]:hover::after {
 
 /* Footer */
 .footer {
-    background: var(--dark-color);
+    background: #111827; /* Keeping footer dark regardless of theme */
     color: white;
     padding: 30px 0;
     text-align: center;
@@ -1139,7 +1216,8 @@ button[title]:hover::after {
         top: 70px;
         left: 0;
         width: 100%;
-        background: white;
+        background: var(--glass-bg);
+        border-bottom: 1px solid var(--glass-border);
         flex-direction: column;
         padding: 20px;
         box-shadow: var(--shadow-lg);

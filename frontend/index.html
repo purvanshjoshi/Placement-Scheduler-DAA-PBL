@@ -8,8 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Login Page -->
+    <script>
+        if (localStorage.getItem('isDarkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
     <div id="loginPage" class="login-page active">
+        <button class="btn btn-outline" onclick="toggleTheme()" style="position: absolute; top: 20px; right: 20px;" title="Toggle Dark Mode">
+            <i class="fas fa-moon"></i> Theme
+        </button>
+
         <div class="login-container">
             <div class="login-header">
                 <i class="fas fa-briefcase"></i>
@@ -39,7 +48,6 @@
         </div>
     </div>
 
-    <!-- Admin Login Form -->
     <div id="adminLoginForm" class="auth-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -65,7 +73,6 @@
         </div>
     </div>
 
-    <!-- Student Login Form -->
     <div id="studentLoginForm" class="auth-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -91,7 +98,6 @@
         </div>
     </div>
 
-    <!-- Student Signup Form -->
     <div id="studentSignupForm" class="auth-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -129,9 +135,7 @@
         </div>
     </div>
 
-    <!-- Main Application (Hidden by default) -->
     <div id="appContainer" class="app-container">
-        <!-- Navigation Bar -->
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-brand">
@@ -143,7 +147,6 @@
                         <i class="fas fa-home"></i> Dashboard
                     </a>
                     
-                    <!-- Admin Links -->
                     <a href="#" onclick="showSection('manageCompanies')" id="adminCompanyLink" style="display: none;">
                         <i class="fas fa-building"></i> Manage Companies
                     </a>
@@ -157,7 +160,6 @@
                         <i class="fas fa-calendar-alt"></i> Manage Interviews
                     </a>
                     
-                    <!-- Student Links -->
                     <a href="#" onclick="showSection('upcomingCompanies')" id="studentCompanyLink" style="display: none;">
                         <i class="fas fa-building"></i> Upcoming Companies
                     </a>
@@ -175,6 +177,9 @@
                     </a>
                     
                     <div class="user-section">
+                        <button class="btn btn-sm btn-outline" id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
                         <span id="userGreeting">Welcome!</span>
                         <button class="btn btn-sm btn-danger" onclick="logout()">
                             <i class="fas fa-sign-out-alt"></i> Logout
@@ -187,9 +192,7 @@
             </div>
         </nav>
 
-        <!-- Main Content -->
         <main class="container">
-            <!-- Dashboard -->
             <section id="dashboard" class="section active">
                 <div class="dashboard-header">
                     <h1 id="dashboardTitle">Dashboard</h1>
@@ -197,12 +200,10 @@
                 </div>
                 
                 <div class="dashboard-cards" id="dashboardCards">
-                    <!-- Cards will be loaded based on user type -->
-                </div>
+                    </div>
                 
             </section>
 
-            <!-- Admin: Manage Companies -->
             <section id="manageCompanies" class="section">
                 <div class="section-header">
                     <h2>Manage Companies</h2>
@@ -228,13 +229,11 @@
                             </tr>
                         </thead>
                         <tbody id="companiesTable">
-                            <!-- Companies will be loaded here -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- Admin: Upload Worksheet -->
             <section id="uploadWorksheet" class="section">
                 <div class="section-header">
                     <h2>Upload Worksheet</h2>
@@ -250,8 +249,7 @@
                         <label for="worksheetCompany">Company</label>
                         <select id="worksheetCompany">
                             <option value="">Select Company</option>
-                            <!-- Companies will be loaded here -->
-                        </select>
+                            </select>
                     </div>
                     
                     <div class="form-group">
@@ -277,12 +275,10 @@
                 <div class="worksheets-list">
                     <h3>Existing Worksheets</h3>
                     <div class="grid-container" id="worksheetsList">
-                        <!-- Worksheets will be loaded here -->
-                    </div>
+                        </div>
                 </div>
             </section>
 
-            <!-- Admin: View Students -->
             <section id="viewStudents" class="section">
                 <div class="section-header">
                     <h2>View Students</h2>
@@ -306,13 +302,11 @@
                             </tr>
                         </thead>
                         <tbody id="studentsTable">
-                            <!-- Students will be loaded here -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- Admin: Manage Interviews -->
             <section id="manageInterviews" class="section">
                 <div class="section-header">
                     <h2>Manage Mock Interviews</h2>
@@ -322,29 +316,24 @@
                 </div>
                 
                 <div class="grid-container" id="interviewsGrid">
-                    <!-- Interviews will be loaded here -->
-                </div>
+                    </div>
                 
                 <div class="booked-students">
                     <h3>Booked Students</h3>
                     <div id="bookedStudentsList">
-                        <!-- Booked students will be loaded here -->
-                    </div>
+                        </div>
                 </div>
             </section>
 
-            <!-- Student: Upcoming Companies -->
             <section id="upcomingCompanies" class="section">
                 <div class="section-header">
                     <h2>Upcoming Companies</h2>
                 </div>
                 
                 <div class="grid-container" id="companiesGrid">
-                    <!-- Companies will be loaded here -->
-                </div>
+                    </div>
             </section>
 
-            <!-- Student: Practice Worksheets -->
             <section id="practiceWorksheets" class="section">
                 <div class="section-header">
                     <h2>Practice Worksheets</h2>
@@ -365,11 +354,9 @@
                 </div>
                 
                 <div class="grid-container" id="studentWorksheetsGrid">
-                    <!-- Worksheets will be loaded here -->
-                </div>
+                    </div>
             </section>
 
-            <!-- Student: Book Interview -->
             <section id="bookInterview" class="section">
                 <div class="section-header">
                     <h2>Book Mock Interview</h2>
@@ -379,31 +366,26 @@
                     <div class="available-slots">
                         <h3>Available Slots</h3>
                         <div class="grid-container" id="availableInterviews">
-                            <!-- Available interviews will be loaded here -->
-                        </div>
+                            </div>
                     </div>
                     
                     <div class="my-bookings">
                         <h3>My Bookings</h3>
                         <div id="myBookingsList">
-                            <!-- Student's bookings will be loaded here -->
-                        </div>
+                            </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Student: My Applications -->
             <section id="myApplications" class="section">
                 <div class="section-header">
                     <h2>My Applications</h2>
                 </div>
                 
                 <div class="applications-list" id="applicationsList">
-                    <!-- Applications will be loaded here -->
-                </div>
+                    </div>
             </section>
 
-            <!-- Student: My Profile -->
             <section id="myProfile" class="section">
                 <div class="profile-container">
                     <div class="profile-header">
@@ -451,7 +433,6 @@
                                 <span class="detail-label">Account Type:</span>
                                 <span class="detail-value" id="profileRole">Student</span>
                             </div>
-                            <!-- CGPA Edit Section -->
                             <div class="detail-item">
                                 <span class="detail-label">CGPA:</span>
                                 <span class="detail-value" id="profileCgpaDisplay">-</span>
@@ -459,7 +440,6 @@
                                     <i class="fas fa-edit"></i> Edit
                                 </button>
                             </div>
-                            <!-- CGPA Edit Form (initially hidden) -->
                             <div class="detail-item" id="cgpaEditForm" style="display: none; flex-direction: column; align-items: flex-start; gap: 10px;">
                                 <span class="detail-label">Update CGPA:</span>
                                 <div style="display: flex; align-items: center; gap: 10px;">
@@ -479,17 +459,14 @@
             </section>
         </main>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="footer-content">
                 <p>&copy; 2024 Placement Scheduler. All rights reserved.</p>
-                <p>Developed for DAA-PBL Project</p> <!-- Removed "Admin: Ayshi Jain" -->
+                <p>Developed for DAA-PBL Project</p>
             </div>
         </footer>
     </div>
 
-    <!-- Modals -->
-    <!-- Add Company Modal -->
     <div id="addCompanyModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -520,7 +497,6 @@
         </div>
     </div>
 
-    <!-- Schedule Interview Modal -->
     <div id="scheduleInterviewModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -555,7 +531,6 @@
         </div>
     </div>
 
-    <!-- Apply Company Modal -->
     <div id="applyCompanyModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -564,8 +539,7 @@
             </div>
             <div class="modal-body">
                 <div class="company-info" id="applyCompanyInfo">
-                    <!-- Company info will be loaded here -->
-                </div>
+                    </div>
                 
                 <div class="application-form">
                     <div class="form-group">
@@ -588,7 +562,6 @@
         </div>
     </div>
 
-    <!-- View Applications Modal -->
     <div id="viewApplicationsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -607,15 +580,13 @@
                             </tr>
                         </thead>
                         <tbody id="applicationsTableBody">
-                            <!-- Applications will be loaded here -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="loading-spinner">
             <i class="fas fa-spinner fa-spin"></i>
@@ -623,7 +594,6 @@
         </div>
     </div>
 
-    <!-- Notification Toast -->
     <div id="notificationToast" class="toast">
         <div class="toast-content">
             <i class="fas fa-check-circle"></i>

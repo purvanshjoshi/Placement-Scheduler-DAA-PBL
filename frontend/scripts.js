@@ -34,6 +34,29 @@ function clearSession() {
     currentRole = null;
 }
 
+// ============= Theme Management (Dark Mode) =============
+// [CORE SPECIFICATION] - JS Logic & Persistence
+function toggleTheme() {
+    // Toggle the dark mode class on the body
+    document.body.classList.toggle('dark-mode');
+    
+    // Check if the class exists after toggling
+    const isDark = document.body.classList.contains('dark-mode');
+    
+    // Save the boolean state to localStorage
+    localStorage.setItem('isDarkMode', isDark);
+}
+
+// [CORE SPECIFICATION] - Implementation Step 3
+function checkTheme() {
+    const isDark = localStorage.getItem('isDarkMode') === 'true';
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+}
+
 // ============= Utility Functions =============
 function showLoading() {
     document.getElementById('loadingOverlay').style.display = 'flex';
@@ -1458,6 +1481,9 @@ window.onclick = function(event) {
 
 // ============= Initialize =============
 document.addEventListener('DOMContentLoaded', function() {
+    // [CORE SPECIFICATION] - Step 3: Check theme on load
+    checkTheme();
+
     // Check for existing session from localStorage
     checkAuth();
     // Initialize file upload handler
